@@ -3,6 +3,7 @@
  */
 package sd.majid.repo;
 
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import sd.majid.model.User;
@@ -13,5 +14,5 @@ import sd.majid.model.User;
  * 
  */
 public interface UserRaiseRepository extends JpaRepository<User, Long> {
-
+	
 }

@@ -3,7 +3,10 @@
  */
 package sd.majid.repo;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import sd.majid.model.Raise;
 
@@ -13,5 +16,17 @@ import sd.majid.model.Raise;
  * 
  */
 public interface ClinetRaiseRepository extends JpaRepository<Raise, Long> {
-
+	
+	@Query("From Raise where status != ?1")
+	public List<Raise> getNotDoneRaise(Integer status);
+	
+	@Query("From Raise where status = ?1")
+	public List<Raise> getInProgressRaise(Integer status);
+	
+	@Query("From Raise where status = ?1")
+	public List<Raise> getDoneRaise(Integer status);
+	
+	@Query("From Raise where status = ?1")
+	public List<Raise> getNewRaise(Integer status);
+	
 }

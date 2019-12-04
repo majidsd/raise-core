@@ -1,5 +1,7 @@
 package sd.majid.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -26,6 +28,15 @@ public class User {
 	
 	@Column(name = "userName")
 	private String userName;
+	
+	@Column(name = "createdAt")
+	private Date createdAt;
+	
+	@Column(name = "password")
+	private String password;
+	
+	@Column(name = "status")
+	private Integer status; 
 
 	public Long getId() {
 		return id;
@@ -67,4 +78,17 @@ public class User {
 		this.userName = userName;
 	}
 
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", name=" + name + ", phone=" + phone + ", email=" + email + ", userName=" + userName
+				+ ", createdAt=" + createdAt + ", password=" + password + ", status=" + status + "]";
+	}
 }
