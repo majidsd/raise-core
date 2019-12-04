@@ -26,5 +26,7 @@ public interface IRaiseService {
 	public List<Raise> getDoneRaise();
 	
 	public List<Raise> getNewRaise();
+	
+	public Raise updateRaise(Raise raise);
 
 }

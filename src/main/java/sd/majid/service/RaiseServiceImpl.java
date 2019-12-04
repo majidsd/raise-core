@@ -3,11 +3,13 @@ package sd.majid.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import sd.majid.model.Raise;
 import sd.majid.repo.ClinetRaiseRepository;
 import sd.majid.util.RaiseStatus;
 
+@Service
 public class RaiseServiceImpl implements IRaiseService {
 
 	@Autowired
@@ -52,6 +54,11 @@ public class RaiseServiceImpl implements IRaiseService {
 	@Override
 	public List<Raise> getNewRaise() {
 		return clinetRaiseRepository.getNewRaise(RaiseStatus.NEW);
+	}
+
+	@Override
+	public Raise updateRaise(Raise raise) {
+		return clinetRaiseRepository.save(raise);
 	}
 
 }
