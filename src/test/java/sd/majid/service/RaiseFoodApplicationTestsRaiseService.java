@@ -16,6 +16,9 @@ public class RaiseFoodApplicationTestsRaiseService {
 	@Autowired
 	private IRaiseService raiseService;
 	
+	@Autowired
+	private IUserService userService;
+	
 	@Test
 	public void testAddRaise() {
 		Raise raise = new Raise();
@@ -25,6 +28,7 @@ public class RaiseFoodApplicationTestsRaiseService {
 		raise.setLongitude("16");
 		raise.setLatitude("20");
 		raise.setDescription("The food is here, come to take it.");
+		raise.setUser(userService.getUserById(1L));
 		raise.setCreatedAt(new Date());
 		System.out.println(raiseService.addRaise(raise));
 	}

@@ -4,10 +4,16 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name = "raise")
@@ -37,6 +43,11 @@ public class Raise {
 	
 	@Column(name = "createdAt")
 	private Date createdAt;
+	
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "user", nullable = true)
+	@OnDelete(action = OnDeleteAction.NO_ACTION)
+	private User user;
 
 	public Long getId() {
 		return id;
@@ -101,12 +112,22 @@ public class Raise {
 	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
 	}
+	
+	
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 
 	@Override
 	public String toString() {
 		return "Raise [id=" + id + ", name=" + name + ", phone=" + phone + ", description=" + description
 				+ ", longitude=" + longitude + ", latitude=" + latitude + ", status=" + status + ", createdAt="
-				+ createdAt + "]";
+				+ createdAt + ", user=" + user + "]";
 	}
 
 }

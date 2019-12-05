@@ -36,5 +36,16 @@ ADD COLUMN `password` VARCHAR(45) NOT NULL AFTER `userName`,
 ADD COLUMN `status` INT NOT NULL AFTER `password`,
 ADD COLUMN `createdAt` DATETIME NOT NULL AFTER `status`;
 
+// Adding new field user to raise table and make the relationship with user table
+ALTER TABLE `db_raisefood`.`raise` 
+ADD COLUMN `user` INT NULL AFTER `createdAt`,
+ADD INDEX `user_to_raise_idx` (`user` ASC) VISIBLE;
+;
+ALTER TABLE `db_raisefood`.`raise` 
+ADD CONSTRAINT `user_to_raise`
+  FOREIGN KEY (`user`)
+  REFERENCES `db_raisefood`.`user` (`id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
 
 
