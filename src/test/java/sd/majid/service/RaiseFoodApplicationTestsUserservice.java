@@ -1,5 +1,6 @@
 package sd.majid.service;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.List;
 
@@ -8,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import sd.majid.model.User;
+import sd.majid.util.HashData;
+import sd.majid.util.UserStatus;
 
 @SpringBootTest
 public class RaiseFoodApplicationTestsUserservice {
@@ -35,6 +38,12 @@ public class RaiseFoodApplicationTestsUserservice {
 		user.setEmail("moe@sd.com");
 		user.setPhone("0123456788");
 		user.setUserName("moesd");
+		user.setStatus(UserStatus.NEW);
+		try {
+			user.setPassword(HashData.sha1("admin"));
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
 		user.setCreatedAt(new Date());
 		System.out.println(userService.addUser(user));
 	}

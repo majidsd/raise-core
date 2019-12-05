@@ -19,11 +19,11 @@ public class RaiseFoodApplicationTestsRaiseService {
 	@Test
 	public void testAddRaise() {
 		Raise raise = new Raise();
-		raise.setName("Abdalmajid Ahmed");
-		raise.setPhone("0123456789");
+		raise.setName("Abdalmajid Abdalla");
+		raise.setPhone("0123456788");
 		raise.setStatus(RaiseStatus.NEW);
-		raise.setLongitude("13");
-		raise.setLatitude("14");
+		raise.setLongitude("16");
+		raise.setLatitude("20");
 		raise.setDescription("The food is here, come to take it.");
 		raise.setCreatedAt(new Date());
 		System.out.println(raiseService.addRaise(raise));
