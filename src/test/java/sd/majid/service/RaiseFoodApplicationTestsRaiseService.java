@@ -22,8 +22,8 @@ public class RaiseFoodApplicationTestsRaiseService {
 	@Test
 	public void testAddRaise() {
 		Raise raise = new Raise();
-		raise.setName("Abdalmajid Abdalla");
-		raise.setPhone("0123456788");
+		raise.setName("Mohamed Ali");
+		raise.setPhone("0123456787");
 		raise.setStatus(RaiseStatus.NEW);
 		raise.setLongitude("16");
 		raise.setLatitude("20");
@@ -36,6 +36,14 @@ public class RaiseFoodApplicationTestsRaiseService {
 	@Test
 	public void testGetAllRaises() {
 		List<Raise> raises = raiseService.getAllRaises();
+		for(Raise ra : raises) {
+			System.out.println(ra.toString());
+		}
+	}
+	
+	@Test
+	public void testGetMyAllRaises() {
+		List<Raise> raises = raiseService.getMyAllRaises(userService.getUserById(1L));
 		for(Raise ra : raises) {
 			System.out.println(ra.toString());
 		}

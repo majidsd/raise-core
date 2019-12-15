@@ -6,6 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import sd.majid.model.Raise;
 import sd.majid.model.User;
+import sd.majid.util.RaiseStatus;
 
 @SpringBootTest
 class RaisefoodApplicationTests {
@@ -24,6 +25,7 @@ class RaisefoodApplicationTests {
 		raise.setDescription("We have some food for you");
 		raise.setLatitude("12");
 		raise.setLongitude("21");
+		raise.setStatus(RaiseStatus.NEW);
 		clinetRaiseRepository.save(raise);
 	}
 	
