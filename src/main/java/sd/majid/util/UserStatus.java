@@ -1,13 +1,44 @@
 package sd.majid.util;
 
-public class UserStatus {
+public enum UserStatus {
+	NEW("New", (byte) 1),
+	ACTIVE("Active", (byte) 2),
+	REVOKED("Revoked", (byte) 3),
+	DELETED("Deleted", (byte) 4);
 	
-	public static final Integer NEW = 1;
+	private String name;
+	private Byte value;
 	
-	public static final Integer ACTIVE = 2;
-	
-	public static final Integer REVOKED = 3;
-	
-	public static final Integer DELETED = 4;
+	private UserStatus(String name, Byte value) {
+		this.name = name;
+		this.value = value;
+	}
 
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	/**
+	 * @return the value
+	 */
+	public Byte getValue() {
+		return value;
+	}
+
+	/**
+	 * @param value the value to set
+	 */
+	public void setValue(Byte value) {
+		this.value = value;
+	}
 }
