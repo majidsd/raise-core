@@ -3,10 +3,10 @@
  */
 package sd.majid.service;
 
-import java.util.List;
-
+import sd.majid.dto.RaiseDto;
 import sd.majid.model.Raise;
-import sd.majid.model.User;
+import sd.majid.response.ListResponse;
+import sd.majid.response.ObjectResponse;
 
 /**
  * @author majid
@@ -14,30 +14,20 @@ import sd.majid.model.User;
  */
 public interface IRaiseService {
 	
-	public Boolean addRaise(Raise raise);
-	
-	public List<Raise> getAllRaises();
-	
-	public List<Raise> getMyAllRaises(User user);
-	
-	public Raise getRaiseById(Long Id);
-	
-	public List<Raise> getNotDoneRaise();
-	
-	public List<Raise> getMyNotDoneRaise(Long id);
-	
-	public List<Raise> getInProgressRaise();
-	
-	public List<Raise> getMyInProgressRaise(Long id);
-	
-	public List<Raise> getDoneRaise();
-	
-	public List<Raise> getMyDoneRaise(Long id);
-	
-	public List<Raise> getNewRaise();
-	
-	public List<Raise> getMyNewRaise(Long id);
-	
-	public Raise updateRaise(Raise raise);
+	public ObjectResponse<Raise> addRaise(RaiseDto raiseDto);
+	public ObjectResponse<Raise> getRaiseById(RaiseDto raiseDto);
+	public ObjectResponse<Raise> cancelRaise(RaiseDto raiseDto);
+	public ObjectResponse<Raise> inProgressRaise(RaiseDto raiseDto);
+	public ObjectResponse<Raise> completeRaise(RaiseDto raiseDto);
+	public ListResponse<Raise> getAllRaises();
+	public ListResponse<Raise> getNewRaise();
+	public ListResponse<Raise> getDoneRaise();
+	public ListResponse<Raise> getNotDoneRaise();
+	public ListResponse<Raise> getInProgressRaise();
+	public ListResponse<Raise> getMyAllRaises(RaiseDto raiseDto);
+	public ListResponse<Raise> getMyNotDoneRaise(RaiseDto raiseDto);
+	public ListResponse<Raise> getMyInProgressRaise(RaiseDto raiseDto);
+	public ListResponse<Raise> getMyDoneRaise(RaiseDto raiseDto);
+	public ListResponse<Raise> getMyNewRaise(RaiseDto raiseDto);
 
 }
