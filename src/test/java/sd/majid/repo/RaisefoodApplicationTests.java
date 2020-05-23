@@ -6,16 +6,15 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import sd.majid.model.Raise;
 import sd.majid.model.User;
-import sd.majid.util.RaiseStatus;
 
 @SpringBootTest
 class RaisefoodApplicationTests {
 	
 	@Autowired
-	private ClinetRaiseRepository clinetRaiseRepository;
+	private RaiseRepository raiseRepository;
 	
 	@Autowired
-	private UserRaiseRepository userRaiseRepository;
+	private UserRepository userRepository;
 	
 	@Test
 	public void testAddRaise() {
@@ -25,8 +24,8 @@ class RaisefoodApplicationTests {
 		raise.setDescription("We have some food for you");
 		raise.setLatitude("12");
 		raise.setLongitude("21");
-		raise.setStatus(RaiseStatus.NEW);
-		clinetRaiseRepository.save(raise);
+		//raise.setStatus(RaiseStatus.NEW);
+		raiseRepository.save(raise);
 	}
 	
 	@Test
@@ -36,7 +35,7 @@ class RaisefoodApplicationTests {
 		user.setUserName("majid");
 		user.setPhone("0123456789");
 		user.setEmail("majid@test.sudan");
-		userRaiseRepository.save(user);
+		userRepository.save(user);
 	}
 
 }
