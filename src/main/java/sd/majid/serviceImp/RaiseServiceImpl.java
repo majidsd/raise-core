@@ -77,7 +77,7 @@ public class RaiseServiceImpl implements IRaiseService {
 		Raise raise;
 		try {
 			raise = raiseRepository.getOne(raiseDto.getId());
-			if(raise != null) {
+			if(raise != null && raise.getStatus() == RaiseStatus.NEW.getValue()) {
 				raise.setStatus(RaiseStatus.CANCELED.getValue());
 				raise.setUpdatedAt(new Date());
 				response = new ObjectResponse<Raise>(ResponseEnum.SUCCESS, raiseRepository.save(raise));
@@ -99,7 +99,7 @@ public class RaiseServiceImpl implements IRaiseService {
 		try {
 			organization = organizationRepository.getOne(raiseDto.getOrganization_id());
 			raise = raiseRepository.getOne(raiseDto.getId());
-			if(raise != null && organization != null) {
+			if(raise != null && organization != null  && raise.getStatus() == RaiseStatus.NEW.getValue()) {
 				raise.setStatus(RaiseStatus.IN_PROGRESS.getValue());
 				raise.setUpdatedAt(new Date());
 				raise.setOrganization(organization);
@@ -120,7 +120,7 @@ public class RaiseServiceImpl implements IRaiseService {
 		Raise raise;
 		try {
 			raise = raiseRepository.getOne(raiseDto.getId());
-			if(raise != null) {
+			if(raise != null  && raise.getStatus() == RaiseStatus.IN_PROGRESS.getValue()) {
 				raise.setStatus(RaiseStatus.DONE.getValue());
 				raise.setUpdatedAt(new Date());
 				response = new ObjectResponse<Raise>(ResponseEnum.SUCCESS, raiseRepository.save(raise));
