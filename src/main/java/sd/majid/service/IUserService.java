@@ -3,9 +3,10 @@
  */
 package sd.majid.service;
 
-import java.util.List;
-
+import sd.majid.dto.UserDto;
 import sd.majid.model.User;
+import sd.majid.response.ListResponse;
+import sd.majid.response.ObjectResponse;
 
 /**
  * @author majid
@@ -13,14 +14,14 @@ import sd.majid.model.User;
  */
 public interface IUserService {
 	
-	public Boolean addUser(User user);
+	public ObjectResponse<User> addUser(UserDto userDto);
 	
-	public List<User> getAllUsers();
+	public ListResponse<User> getAllUsers();
 	
-	public User getUserById(Long id);
+	public ObjectResponse<User> getUserById(UserDto userDto);
 	
-	public User updateUser(User user);
+	public ObjectResponse<User> activateUser(UserDto userDto);
 	
-	public Boolean deleteUser(User user);
+	public ObjectResponse<Boolean> revokeUser(UserDto userDto);
 
 }
