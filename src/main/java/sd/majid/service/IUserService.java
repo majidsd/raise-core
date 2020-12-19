@@ -4,7 +4,6 @@
 package sd.majid.service;
 
 import sd.majid.dto.UserDto;
-import sd.majid.model.User;
 import sd.majid.response.ListResponse;
 import sd.majid.response.ObjectResponse;
 
@@ -14,13 +13,13 @@ import sd.majid.response.ObjectResponse;
  */
 public interface IUserService {
 	
-	public ObjectResponse<User> addUser(UserDto userDto);
+	public ObjectResponse<UserDto> addUser(UserDto userDto);
 	
-	public ListResponse<User> getAllUsers();
+	public ListResponse<UserDto> getAllUsers();
 	
-	public ObjectResponse<User> getUserById(UserDto userDto);
+	public ObjectResponse<UserDto> getUserById(Long userId);
 	
-	public ObjectResponse<User> activateUser(UserDto userDto);
+	public ObjectResponse<UserDto> activateUser(UserDto userDto);
 	
 	public ObjectResponse<Boolean> revokeUser(UserDto userDto);
 
