@@ -1,16 +1,25 @@
+/**
+ * 
+ */
 package sd.majid.util;
 
-public enum RaiseStatus {
+/**
+ * @author MaJiD
+ *
+ */
+public enum UserType {
 	
-	NEW("New", (byte) 0),
-	IN_PROGRESS("In Progress", (byte) 1),
-	DONE("Done", (byte) 2),
-	CANCELED("Canceled", (byte) 3);
+	ADMIN("Admin", (byte) 0),
+	NGO_MANAGEMENT("NGO_Management", (byte) 1),
+	NGO_PICKUP("NGO_PickUp", (byte) 2),
+	NGO_FULL("NGO_Full", (byte) 3),
+	RAISER("Raiser", (byte) 4),
+	VISITOR("Visitor", (byte) 5);
 	
 	private String name;
 	private Byte value;
 	
-	private RaiseStatus(String name, Byte value) {
+	private UserType(String name, Byte value) {
 		this.name = name;
 		this.value = value;
 	}

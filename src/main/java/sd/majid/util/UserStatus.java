@@ -1,10 +1,10 @@
 package sd.majid.util;
 
 public enum UserStatus {
-	NEW("New", (byte) 1),
-	ACTIVE("Active", (byte) 2),
-	REVOKED("Revoked", (byte) 3),
-	DELETED("Deleted", (byte) 4);
+	NEW("New", (byte) 0),
+	ACTIVE("Active", (byte) 1),
+	REVOKED("Revoked", (byte) 2),
+	DELETED("Deleted", (byte) 3);
 	
 	private String name;
 	private Byte value;
