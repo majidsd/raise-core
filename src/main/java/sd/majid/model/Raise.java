@@ -15,6 +15,8 @@ import javax.persistence.Table;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import sd.majid.util.RaiseStatus;
+
 @Entity
 @Table(name = "raise")
 public class Raise {
@@ -39,7 +41,7 @@ public class Raise {
 	private String latitude;
 	
 	@Column(name = "status", nullable = false)
-	private Byte status;
+	private RaiseStatus status;
 	
 	@Column(name = "createdAt", nullable = false)
 	private Date createdAt;
@@ -47,10 +49,20 @@ public class Raise {
 	@Column(name = "updatedAt", nullable = false)
 	private Date updatedAt;
 	
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "user", nullable = true)
+	@ManyToOne(fetch = FetchType.LAZY, optional = true)
+	@JoinColumn(name = "createdBy", nullable = true)
 	@OnDelete(action = OnDeleteAction.NO_ACTION)
-	private User user;
+	private User createdBy;
+	
+	@ManyToOne(fetch = FetchType.LAZY, optional = true)
+	@JoinColumn(name = "updateBy", nullable = true)
+	@OnDelete(action = OnDeleteAction.NO_ACTION)
+	private User updateBy;
+	
+	@ManyToOne(fetch = FetchType.LAZY, optional = true)
+	@JoinColumn(name = "pickUpUser", nullable = true)
+	@OnDelete(action = OnDeleteAction.NO_ACTION)
+	private User pickUp;
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
 	@JoinColumn(name = "organization", nullable = true)
@@ -144,14 +156,14 @@ public class Raise {
 	/**
 	 * @return the status
 	 */
-	public Byte getStatus() {
+	public RaiseStatus getStatus() {
 		return status;
 	}
 
 	/**
 	 * @param status the status to set
 	 */
-	public void setStatus(Byte status) {
+	public void setStatus(RaiseStatus status) {
 		this.status = status;
 	}
 
@@ -184,17 +196,45 @@ public class Raise {
 	}
 
 	/**
-	 * @return the user
+	 * @return the createdBy
 	 */
-	public User getUser() {
-		return user;
+	public User getCreatedBy() {
+		return createdBy;
 	}
 
 	/**
-	 * @param user the user to set
+	 * @param createdBy the createdBy to set
 	 */
-	public void setUser(User user) {
-		this.user = user;
+	public void setCreatedBy(User createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	/**
+	 * @return the updateBy
+	 */
+	public User getUpdateBy() {
+		return updateBy;
+	}
+
+	/**
+	 * @param updateBy the updateBy to set
+	 */
+	public void setUpdateBy(User updateBy) {
+		this.updateBy = updateBy;
+	}
+
+	/**
+	 * @return the pickUp
+	 */
+	public User getPickUp() {
+		return pickUp;
+	}
+
+	/**
+	 * @param pickUp the pickUp to set
+	 */
+	public void setPickUp(User pickUp) {
+		this.pickUp = pickUp;
 	}
 
 	/**
@@ -209,13 +249,6 @@ public class Raise {
 	 */
 	public void setOrganization(Organization organization) {
 		this.organization = organization;
-	}
-
-	@Override
-	public String toString() {
-		return "Raise [id=" + id + ", name=" + name + ", phone=" + phone + ", description=" + description
-				+ ", longitude=" + longitude + ", latitude=" + latitude + ", status=" + status + ", createdAt="
-				+ createdAt + ", updatedAt=" + updatedAt + ", user=" + "" + ", organization=" + organization + "]";
 	}
 	
 }

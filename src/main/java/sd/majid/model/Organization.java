@@ -18,6 +18,8 @@ import javax.persistence.Table;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import sd.majid.util.OrganizationStatus;
+
 /**
  * @author MaJiD
  *
@@ -37,7 +39,7 @@ public class Organization {
 	private String description;
 	
 	@Column(name = "status", nullable = false)
-	private Byte status;
+	private OrganizationStatus status;
 	
 	@Column(name = "createdAt", nullable = false)
 	private Date createdAt;
@@ -46,12 +48,12 @@ public class Organization {
 	private Date updatedAt;
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "createdBy", nullable = true)
+	@JoinColumn(name = "createdBy", nullable = false)
 	@OnDelete(action = OnDeleteAction.NO_ACTION)
 	private User createdBy;
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "updatedBy", nullable = true)
+	@JoinColumn(name = "updatedBy", nullable = false)
 	@OnDelete(action = OnDeleteAction.NO_ACTION)
 	private User updatedBy;
 
@@ -100,14 +102,14 @@ public class Organization {
 	/**
 	 * @return the status
 	 */
-	public Byte getStatus() {
+	public OrganizationStatus getStatus() {
 		return status;
 	}
 
 	/**
 	 * @param status the status to set
 	 */
-	public void setStatus(Byte status) {
+	public void setStatus(OrganizationStatus status) {
 		this.status = status;
 	}
 
@@ -167,11 +169,11 @@ public class Organization {
 		this.updatedBy = updatedBy;
 	}
 
-	@Override
+	/*@Override
 	public String toString() {
 		return "Organization [id=" + id + ", name=" + name + ", description=" + description + ", status=" + status
 				+ ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + ", createdBy=" + createdBy + ", updatedBy="
 				+ updatedBy + "]";
-	}
+	}*/
 	
 }

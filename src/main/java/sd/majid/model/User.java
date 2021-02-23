@@ -15,6 +15,9 @@ import javax.persistence.Table;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import sd.majid.util.UserStatus;
+import sd.majid.util.UserType;
+
 @Entity
 @Table(name = "user")
 public class User {
@@ -23,13 +26,13 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name = "name", nullable = false, unique = true)
+	@Column(name = "name", nullable = false)
 	private String name;
 	
-	@Column(name = "phone", nullable = false)
+	@Column(name = "phone", nullable = false, unique = true)
 	private String phone;
 	
-	@Column(name = "email", nullable = false)
+	@Column(name = "email", nullable = false, unique = true)
 	private String email;
 	
 	@Column(name = "userName", nullable = false, unique = true)
@@ -45,17 +48,25 @@ public class User {
 	private String password;
 	
 	@Column(name = "status", nullable = false)
-	private Byte status;
+	private UserStatus status;
+	
+	@Column(name = "type", nullable = false)
+	private UserType type;
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "createdBy", nullable = true)
+	@JoinColumn(name = "createdBy", nullable = false)
 	@OnDelete(action = OnDeleteAction.NO_ACTION)
 	private User createdBy;
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "updatedBy", nullable = true)
+	@JoinColumn(name = "updatedBy", nullable = false)
 	@OnDelete(action = OnDeleteAction.NO_ACTION)
 	private User updatedBy;
+	
+	@ManyToOne(fetch = FetchType.LAZY, optional = true)
+	@JoinColumn(name = "organization", nullable = true)
+	@OnDelete(action = OnDeleteAction.NO_ACTION)
+	private Organization organization;
 
 	/**
 	 * @return the id
@@ -172,17 +183,31 @@ public class User {
 	/**
 	 * @return the status
 	 */
-	public Byte getStatus() {
+	public UserStatus getStatus() {
 		return status;
 	}
 
 	/**
 	 * @param status the status to set
 	 */
-	public void setStatus(Byte status) {
+	public void setStatus(UserStatus status) {
 		this.status = status;
 	}
 	
+	/**
+	 * @return the type
+	 */
+	public UserType getType() {
+		return type;
+	}
+
+	/**
+	 * @param type the type to set
+	 */
+	public void setType(UserType type) {
+		this.type = type;
+	}
+
 	/**
 	 * @return the createdBy
 	 */
@@ -211,10 +236,25 @@ public class User {
 		this.updatedBy = updatedBy;
 	}
 
-	@Override
+	/**
+	 * @return the organization
+	 */
+	public Organization getOrganization() {
+		return organization;
+	}
+
+	/**
+	 * @param organization the organization to set
+	 */
+	public void setOrganization(Organization organization) {
+		this.organization = organization;
+	}
+
+	/*@Override
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + ", phone=" + phone + ", email=" + email + ", userName=" + userName
 				+ ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + ", password=" + password + ", status="
-				+ status + ", createdBy=" + createdBy + ", updatedBy=" + updatedBy + "]";
-	}
+				+ status + ", type=" + type + ", createdBy=" + createdBy + ", updatedBy=" + updatedBy + "]";
+	}*/
+	
 }
