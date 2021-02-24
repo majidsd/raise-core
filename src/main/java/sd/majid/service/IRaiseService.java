@@ -4,7 +4,9 @@
 package sd.majid.service;
 
 import sd.majid.dto.RaiseDto;
+import sd.majid.model.Organization;
 import sd.majid.model.Raise;
+import sd.majid.model.User;
 import sd.majid.response.ListResponse;
 import sd.majid.response.ObjectResponse;
 
@@ -14,20 +16,32 @@ import sd.majid.response.ObjectResponse;
  */
 public interface IRaiseService {
 	
-	public ObjectResponse<Raise> addRaise(RaiseDto raiseDto);
-	public ObjectResponse<Raise> getRaiseById(RaiseDto raiseDto);
-	public ObjectResponse<Raise> cancelRaise(RaiseDto raiseDto);
-	public ObjectResponse<Raise> inProgressRaise(RaiseDto raiseDto);
-	public ObjectResponse<Raise> completeRaise(RaiseDto raiseDto);
-	public ListResponse<Raise> getAllRaises();
-	public ListResponse<Raise> getNewRaise();
-	public ListResponse<Raise> getDoneRaise();
-	public ListResponse<Raise> getNotDoneRaise();
-	public ListResponse<Raise> getInProgressRaise();
-	public ListResponse<Raise> getMyAllRaises(RaiseDto raiseDto);
-	public ListResponse<Raise> getMyNotDoneRaise(RaiseDto raiseDto);
-	public ListResponse<Raise> getMyInProgressRaise(RaiseDto raiseDto);
-	public ListResponse<Raise> getMyDoneRaise(RaiseDto raiseDto);
-	public ListResponse<Raise> getMyNewRaise(RaiseDto raiseDto);
-
+	public ObjectResponse<RaiseDto> addRaise(Raise raise);
+	public ObjectResponse<RaiseDto> inProgressRaise(Raise raise);
+	public ObjectResponse<RaiseDto> assignRaise(Raise raise);
+	public ObjectResponse<RaiseDto> completeRaise(Raise raise);
+	public ObjectResponse<RaiseDto> cancelRaise(Raise raise);
+	
+	public ObjectResponse<RaiseDto> getRaiseById(Long id);
+	public ObjectResponse<Raise> getRaiseObjectById(Long id);
+	
+	public ListResponse<RaiseDto> getOrganizationInProgressRaises(Organization organization);
+	public ListResponse<RaiseDto> getOrganizationDoneRaises(Organization organization);
+	public ListResponse<RaiseDto> getOrganizationCanceledRaises(Organization organization);
+	public ListResponse<RaiseDto> getOrganizationNotDoneRaises(Organization organization);
+	public ListResponse<RaiseDto> getOrganizationAllRaises(Organization organization);
+	
+	public ListResponse<RaiseDto> getUserNewRaises(User user);
+	public ListResponse<RaiseDto> getUserInProgressRaises(User user);
+	public ListResponse<RaiseDto> getUserDoneRaises(User user);
+	public ListResponse<RaiseDto> getUserCanceledRaises(User user);
+	public ListResponse<RaiseDto> getUserNotDoneRaises(User user);
+	public ListResponse<RaiseDto> getUserAllRaises(User user);
+	
+	public ListResponse<RaiseDto> getAllNewRaises();
+	public ListResponse<RaiseDto> getAllInProgressRaises();
+	public ListResponse<RaiseDto> getAllDoneRaises();
+	public ListResponse<RaiseDto> getAllCanceledRaises();
+	public ListResponse<RaiseDto> getAllNotDoneRaises();
+	public ListResponse<RaiseDto> getAllRaises();
 }
