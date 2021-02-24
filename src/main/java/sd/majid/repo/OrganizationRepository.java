@@ -18,6 +18,6 @@ import sd.majid.util.OrganizationStatus;
 public interface OrganizationRepository extends JpaRepository<Organization, Long> {
 	
 	@Query("FROM Organization where status = ?1")
-	public List<Organization> getOrganizationByStatus(OrganizationStatus status);
+	public List<Organization> getOrganizationsByStatus(OrganizationStatus status);
 
 }
