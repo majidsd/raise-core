@@ -5,6 +5,9 @@ package sd.majid.dto;
 
 import java.util.Date;
 
+import sd.majid.util.UserStatus;
+import sd.majid.util.UserType;
+
 /**
  * @author MaJiD
  *
@@ -14,9 +17,13 @@ public class UserDto {
 	private String name;
 	private String phone;
 	private String email;
+	private String userName;
 	private Date createdAt;
 	private Date updatedAt;
-	private Byte status;
+	private UserStatus status;
+	private UserType type;
+	private Long organization;
+	
 	/**
 	 * @return the id
 	 */
@@ -66,6 +73,18 @@ public class UserDto {
 		this.email = email;
 	}
 	/**
+	 * @return the userName
+	 */
+	public String getUserName() {
+		return userName;
+	}
+	/**
+	 * @param userName the userName to set
+	 */
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	/**
 	 * @return the createdAt
 	 */
 	public Date getCreatedAt() {
@@ -92,18 +111,43 @@ public class UserDto {
 	/**
 	 * @return the status
 	 */
-	public Byte getStatus() {
+	public UserStatus getStatus() {
 		return status;
 	}
 	/**
 	 * @param status the status to set
 	 */
-	public void setStatus(Byte status) {
+	public void setStatus(UserStatus status) {
 		this.status = status;
+	}
+	/**
+	 * @return the type
+	 */
+	public UserType getType() {
+		return type;
+	}
+	/**
+	 * @param type the type to set
+	 */
+	public void setType(UserType type) {
+		this.type = type;
+	}
+	/**
+	 * @return the organization
+	 */
+	public Long getOrganization() {
+		return organization;
+	}
+	/**
+	 * @param organization the organization to set
+	 */
+	public void setOrganization(Long organization) {
+		this.organization = organization;
 	}
 	@Override
 	public String toString() {
-		return "UserDto [id=" + id + ", name=" + name + ", phone=" + phone + ", email=" + email + ", createdAt="
-				+ createdAt + ", updatedAt=" + updatedAt + ", status=" + status + "]";
+		return "UserDto [id=" + id + ", name=" + name + ", phone=" + phone + ", email=" + email + ", userName="
+				+ userName + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + ", status=" + status + ", type="
+				+ type + ", organization=" + organization + "]";
 	}
 }
