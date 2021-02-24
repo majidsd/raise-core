@@ -117,4 +117,11 @@ public class OrganizationDto {
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
+	@Override
+	public String toString() {
+		return "OrganizationDto [id=" + id + ", name=" + name + ", description=" + description + ", status=" + status
+				+ ", createdBy=" + createdBy + ", updatedBy=" + updatedBy + ", createdAt=" + createdAt + ", updatedAt="
+				+ updatedAt + "]";
+	}
+	
 }
