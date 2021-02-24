@@ -24,7 +24,7 @@ public class OrganizationRepositoryUnitTests {
 	private OrganizationRepository organizationRepository;
 	
 	@Test
-	public void testAddOrganizationTest() {
+	public void testAddOrganization() {
 		Organization organization = new Organization();
 		organization.setName("Update This");
 		organization.setDescription("This is a old description.");
@@ -54,7 +54,7 @@ public class OrganizationRepositoryUnitTests {
 	
 	@Test
 	public void testGetOrganizationByStatus() {
-		List<Organization> organizations = organizationRepository.getOrganizationByStatus(OrganizationStatus.NEW);
+		List<Organization> organizations = organizationRepository.getOrganizationsByStatus(OrganizationStatus.NEW);
 		for(Organization organization : organizations) {
 			System.out.println(organization.getName() + " - " + organization.getDescription());
 		}
