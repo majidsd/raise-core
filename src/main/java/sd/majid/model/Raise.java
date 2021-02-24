@@ -31,7 +31,7 @@ public class Raise {
 	@Column(name = "phone", nullable = false)
 	private String phone;
 	
-	@Column(name = "description", nullable = true)
+	@Column(name = "description", nullable = false)
 	private String description;
 	
 	@Column(name = "longitude", nullable = false)
