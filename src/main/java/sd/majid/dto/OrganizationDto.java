@@ -3,6 +3,10 @@
  */
 package sd.majid.dto;
 
+import java.util.Date;
+
+import sd.majid.util.OrganizationStatus;
+
 /**
  * @author MaJiD
  *
@@ -11,8 +15,12 @@ public class OrganizationDto {
 	private Long id;
 	private String name;
 	private String description;
-	private Byte status;
-	private Long creater_id;
+	private OrganizationStatus status;
+	private Long createdBy;
+	private Long updatedBy;
+	private Date createdAt;
+	private Date updatedAt;
+	
 	/**
 	 * @return the id
 	 */
@@ -52,25 +60,61 @@ public class OrganizationDto {
 	/**
 	 * @return the status
 	 */
-	public Byte getStatus() {
+	public OrganizationStatus getStatus() {
 		return status;
 	}
 	/**
 	 * @param status the status to set
 	 */
-	public void setStatus(Byte status) {
+	public void setStatus(OrganizationStatus status) {
 		this.status = status;
 	}
 	/**
-	 * @return the creater_id
+	 * @return the createdBy
 	 */
-	public Long getCreater_id() {
-		return creater_id;
+	public Long getCreatedBy() {
+		return createdBy;
 	}
 	/**
-	 * @param creater_id the creater_id to set
+	 * @param createdBy the createdBy to set
 	 */
-	public void setCreater_id(Long creater_id) {
-		this.creater_id = creater_id;
+	public void setCreatedBy(Long createdBy) {
+		this.createdBy = createdBy;
+	}
+	/**
+	 * @return the createdBy
+	 */
+	public Long getUpdatedBy() {
+		return updatedBy;
+	}
+	/**
+	 * @param creater_id the createdBy to set
+	 */
+	public void setUpdatedBy(Long updatedBy) {
+		this.updatedBy = updatedBy;
+	}
+	/**
+	 * @return the createdAt
+	 */
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+	/**
+	 * @param createdAt the createdAt to set
+	 */
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+	/**
+	 * @return the updatedAt
+	 */
+	public Date getUpdatedAt() {
+		return updatedAt;
+	}
+	/**
+	 * @param updatedAt the updatedAt to set
+	 */
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
 	}
 }

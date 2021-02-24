@@ -3,6 +3,10 @@
  */
 package sd.majid.dto;
 
+import java.util.Date;
+
+import sd.majid.util.RaiseStatus;
+
 /**
  * @author MaJiD
  *
@@ -10,14 +14,19 @@ package sd.majid.dto;
 public class RaiseDto {
 	
 	private Long id;
-	private Long user_id;
+	private Long createdById;
 	private String name;
 	private String phone;
 	private String description;
 	private String longitude;
 	private String latitude;
-	private Long organization_id;
-	private Byte status;
+	private OrganizationDto organization;
+	private RaiseStatus status;
+	private Date createdAt;
+	private Date updatedAt;
+	private PickUpUserDto pickUpUser;
+	private Long updateBy;
+	
 	/**
 	 * @return the id
 	 */
@@ -31,16 +40,16 @@ public class RaiseDto {
 		this.id = id;
 	}
 	/**
-	 * @return the user_id
+	 * @return the createdById
 	 */
-	public Long getUser_id() {
-		return user_id;
+	public Long getCreatedById() {
+		return createdById;
 	}
 	/**
-	 * @param user_id the user_id to set
+	 * @param createdById the createdById to set
 	 */
-	public void setUser_id(Long user_id) {
-		this.user_id = user_id;
+	public void setCreatedById(Long createdById) {
+		this.createdById = createdById;
 	}
 	/**
 	 * @return the name
@@ -105,32 +114,80 @@ public class RaiseDto {
 	/**
 	 * @return the organization_id
 	 */
-	public Long getOrganization_id() {
-		return organization_id;
+	public OrganizationDto getOrganization() {
+		return organization;
 	}
 	/**
 	 * @param organization_id the organization_id to set
 	 */
-	public void setOrganization_id(Long organization_id) {
-		this.organization_id = organization_id;
+	public void setOrganization(OrganizationDto organization) {
+		this.organization = organization;
 	}
 	/**
 	 * @return the status
 	 */
-	public Byte getStatus() {
+	public RaiseStatus getStatus() {
 		return status;
 	}
 	/**
 	 * @param status the status to set
 	 */
-	public void setStatus(Byte status) {
+	public void setStatus(RaiseStatus status) {
 		this.status = status;
+	}
+	/**
+	 * @return the createdAt
+	 */
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+	/**
+	 * @param createdAt the createdAt to set
+	 */
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+	/**
+	 * @return the updatedAt
+	 */
+	public Date getUpdatedAt() {
+		return updatedAt;
+	}
+	/**
+	 * @param updatedAt the updatedAt to set
+	 */
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
+	}
+	/**
+	 * @return the pickUpUser
+	 */
+	public PickUpUserDto getPickUpUser() {
+		return pickUpUser;
+	}
+	/**
+	 * @param pickUpUser the pickUpUser to set
+	 */
+	public void setPickUpUser(PickUpUserDto pickUpUser) {
+		this.pickUpUser = pickUpUser;
+	}
+	/**
+	 * @return the updateBy
+	 */
+	public Long getUpdateBy() {
+		return updateBy;
+	}
+	/**
+	 * @param updateBy the updateBy to set
+	 */
+	public void setUpdateBy(Long updateBy) {
+		this.updateBy = updateBy;
 	}
 	@Override
 	public String toString() {
-		return "RaiseDto [id=" + id + ", user_id=" + user_id + ", name=" + name + ", phone=" + phone + ", description="
-				+ description + ", longitude=" + longitude + ", latitude=" + latitude + ", organization_id="
-				+ organization_id + ", status=" + status + "]";
+		return "RaiseDto [id=" + id + ", createdById=" + createdById + ", name=" + name + ", phone=" + phone
+				+ ", description=" + description + ", longitude=" + longitude + ", latitude=" + latitude
+				+ ", organization=" + organization + ", status=" + status + ", createdAt=" + createdAt + ", updatedAt="
+				+ updatedAt + ", pickUpUser=" + pickUpUser + ", updateBy=" + updateBy + "]";
 	}
-
 }
