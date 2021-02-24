@@ -14,11 +14,14 @@ import sd.majid.response.ObjectResponse;
  */
 public interface IOrganizationService {
 	
-	public ObjectResponse<Organization> addOrganization(OrganizationDto organizationDto);
-	public ObjectResponse<Organization> getOrganizationById(OrganizationDto organizationDto);
-	public ObjectResponse<Organization> declineOrganization(OrganizationDto organizationDto);
-	public ObjectResponse<Organization> activateOrganization(OrganizationDto organizationDto);
-	public ListResponse<Organization> getAllOrganization();
-	public ListResponse<Organization> getAllActiveOrganization();
-	public ListResponse<Organization> getAllDeclineOrganization();
+	public ObjectResponse<OrganizationDto> addOrganization(Organization organizationDto);
+	public ObjectResponse<OrganizationDto> activateOrganization(Organization organizationDto);
+	public ObjectResponse<OrganizationDto> declineOrganization(Organization organizationDto);
+	
+	public ObjectResponse<OrganizationDto> getOrganizationById(Long id);
+	public ObjectResponse<Organization> getOrganizationObjectById(Long id);
+	
+	public ListResponse<OrganizationDto> getAllActiveOrganizations();
+	public ListResponse<OrganizationDto> getAllDeclinedOrganizations();
+	public ListResponse<OrganizationDto> getAllOrganizations();
 }

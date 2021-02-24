@@ -3,16 +3,16 @@
  */
 package sd.majid.serviceImp;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import sd.majid.dto.OrganizationDto;
 import sd.majid.model.Organization;
-import sd.majid.model.User;
 import sd.majid.repo.OrganizationRepository;
-import sd.majid.repo.UserRepository;
 import sd.majid.response.ListResponse;
 import sd.majid.response.ObjectResponse;
 import sd.majid.response.ResponseEnum;
@@ -28,45 +28,134 @@ public class OrganizationServiceImp implements IOrganizationService {
 	
 	@Autowired
 	private OrganizationRepository organizationRepository;
+
+	@Override
+	public ObjectResponse<OrganizationDto> addOrganization(Organization organization) {
+		ObjectResponse<OrganizationDto> response;
+		try {
+			organization.setStatus(OrganizationStatus.NEW);
+			organization.setCreatedAt(new Date());
+			organization.setUpdatedAt(new Date());
+			Organization org = organizationRepository.save(organization); // savedOrg
+			if(org != null) {
+				OrganizationDto dto = new OrganizationDto();
+				dto.setId(org.getId());
+				dto.setName(org.getName());
+				dto.setStatus(org.getStatus());
+				dto.setDescription(org.getDescription());
+				dto.setCreatedAt(org.getCreatedAt());
+				dto.setUpdatedAt(org.getUpdatedAt());
+				if(org.getCreatedBy() != null)
+					dto.setCreatedBy(org.getCreatedBy().getId());
+				if(org.getUpdatedBy() != null)
+					dto.setUpdatedBy(org.getUpdatedBy().getId());
+				response = new ObjectResponse<OrganizationDto>(ResponseEnum.SUCCESS, dto);
+			} else {
+				response = new ObjectResponse<OrganizationDto>(ResponseEnum.TRY_AGAIN, null);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			response = new ObjectResponse<OrganizationDto>(ResponseEnum.TRY_AGAIN, null);
+		}
+		return response;
+	}
 	
-	@Autowired
-	private UserRepository userRepository;
-
 	@Override
-	public ObjectResponse<Organization> addOrganization(OrganizationDto organizationDto) {
-		ObjectResponse<Organization> response;
-		Organization organization;
-		User user;
+	public ObjectResponse<OrganizationDto> activateOrganization(Organization organization) {
+		ObjectResponse<OrganizationDto> response;
 		try {
-			organization = new Organization();
-			user = userRepository.getOne(organizationDto.getCreater_id());
-			if(user != null) {
-				organization.setName(organizationDto.getName());
-				organization.setDescription(organizationDto.getDescription());
-				organization.setStatus(OrganizationStatus.ACTIVE.getValue());
-				organization.setCreatedAt(new Date());
-				organization.setUpdatedAt(new Date());
-				organization.setCreatedBy(user);
-				organization.setUpdatedBy(user);
-				response = new ObjectResponse<Organization>(ResponseEnum.SUCCESS, organizationRepository.save(organization));
+			organization.setStatus(OrganizationStatus.ACTIVE);
+			organization.setUpdatedAt(new Date());
+			Organization org = organizationRepository.save(organization); // updatedOrg
+			if(org != null) {
+				OrganizationDto dto = new OrganizationDto();
+				dto.setId(org.getId());
+				dto.setName(org.getName());
+				dto.setStatus(org.getStatus());
+				dto.setDescription(org.getDescription());
+				dto.setCreatedAt(org.getCreatedAt());
+				dto.setUpdatedAt(org.getUpdatedAt());
+				if(org.getCreatedBy() != null)
+					dto.setCreatedBy(org.getCreatedBy().getId());
+				if(org.getUpdatedBy() != null)
+					dto.setUpdatedBy(org.getUpdatedBy().getId());
+				response = new ObjectResponse<OrganizationDto>(ResponseEnum.SUCCESS, dto);
 			} else {
-				response = new ObjectResponse<Organization>(ResponseEnum.ITEM_NOT_FOUND, null);
+				response = new ObjectResponse<OrganizationDto>(ResponseEnum.TRY_AGAIN, null);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			response = new ObjectResponse<Organization>(ResponseEnum.TRY_AGAIN, null);
+			response = new ObjectResponse<OrganizationDto>(ResponseEnum.TRY_AGAIN, null);
+		}
+		return response;
+	}
+	
+	@Override
+	public ObjectResponse<OrganizationDto> declineOrganization(Organization organization) {
+		ObjectResponse<OrganizationDto> response;
+		try {
+			organization.setStatus(OrganizationStatus.DECLINED);
+			organization.setUpdatedAt(new Date());
+			Organization org = organizationRepository.save(organization); // declinedOrg
+			if(org != null) {
+				OrganizationDto dto = new OrganizationDto();
+				dto.setId(org.getId());
+				dto.setName(org.getName());
+				dto.setStatus(org.getStatus());
+				dto.setDescription(org.getDescription());
+				dto.setCreatedAt(org.getCreatedAt());
+				dto.setUpdatedAt(org.getUpdatedAt());
+				if(org.getCreatedBy() != null)
+					dto.setCreatedBy(org.getCreatedBy().getId());
+				if(org.getUpdatedBy() != null)
+					dto.setUpdatedBy(org.getUpdatedBy().getId());
+				response = new ObjectResponse<OrganizationDto>(ResponseEnum.SUCCESS, dto);
+			} else {
+				response = new ObjectResponse<OrganizationDto>(ResponseEnum.TRY_AGAIN, null);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			response = new ObjectResponse<OrganizationDto>(ResponseEnum.TRY_AGAIN, null);
 		}
 		return response;
 	}
 
 	@Override
-	public ObjectResponse<Organization> getOrganizationById(OrganizationDto organizationDto) {
+	public ObjectResponse<OrganizationDto> getOrganizationById(Long id) {
+		ObjectResponse<OrganizationDto> response;
+		try {
+			Organization org = organizationRepository.getOne(id);
+			if(org != null) {
+				OrganizationDto dto = new OrganizationDto();
+				dto.setId(org.getId());
+				dto.setName(org.getName());
+				dto.setStatus(org.getStatus());
+				dto.setDescription(org.getDescription());
+				dto.setCreatedAt(org.getCreatedAt());
+				dto.setUpdatedAt(org.getUpdatedAt());
+				if(org.getCreatedBy() != null)
+					dto.setCreatedBy(org.getCreatedBy().getId());
+				if(org.getUpdatedBy() != null)
+					dto.setUpdatedBy(org.getUpdatedBy().getId());					
+				response = new ObjectResponse<OrganizationDto>(ResponseEnum.SUCCESS, dto);
+			} else {
+				response = new ObjectResponse<OrganizationDto>(ResponseEnum.ITEM_NOT_FOUND, null);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			response = new ObjectResponse<OrganizationDto>(ResponseEnum.TRY_AGAIN, null);
+		}
+		return response;
+	}
+	
+	@Override
+	public ObjectResponse<Organization> getOrganizationObjectById(Long id) {
 		ObjectResponse<Organization> response;
 		Organization organization;
 		try {
-			organization = organizationRepository.getOne(organizationDto.getId());
+			organization = organizationRepository.getOne(id);
 			if(organization != null) {
-				response = new ObjectResponse<Organization>(ResponseEnum.SUCCESS, organizationRepository.getOne(organizationDto.getId()));
+				response = new ObjectResponse<Organization>(ResponseEnum.SUCCESS, organization);
 			} else {
 				response = new ObjectResponse<Organization>(ResponseEnum.ITEM_NOT_FOUND, null);
 			}
@@ -78,79 +167,97 @@ public class OrganizationServiceImp implements IOrganizationService {
 	}
 
 	@Override
-	public ObjectResponse<Organization> declineOrganization(OrganizationDto organizationDto) {
-		ObjectResponse<Organization> response;
-		Organization organization;
+	public ListResponse<OrganizationDto> getAllActiveOrganizations() {
+		ListResponse<OrganizationDto> response;
 		try {
-			organization = organizationRepository.getOne(organizationDto.getId());
-			if(organization != null && organization.getStatus() == OrganizationStatus.ACTIVE.getValue()) {
-				organization.setStatus(OrganizationStatus.DECLINED.getValue());
-				organization.setUpdatedAt(new Date());
-				organization.setUpdatedBy(userRepository.getOne(organizationDto.getCreater_id()));
-				response = new ObjectResponse<Organization>(ResponseEnum.SUCCESS, organizationRepository.save(organization));
+			List<Organization> orgs = organizationRepository.getOrganizationsByStatus(OrganizationStatus.ACTIVE);
+			if(orgs != null) {
+				List<OrganizationDto> orgDtos = new ArrayList<OrganizationDto>();
+				for(Organization org : orgs) {
+					OrganizationDto dto = new OrganizationDto();
+					dto.setId(org.getId());
+					dto.setName(org.getName());
+					dto.setStatus(org.getStatus());
+					dto.setDescription(org.getDescription());
+					dto.setCreatedAt(org.getCreatedAt());
+					dto.setUpdatedAt(org.getUpdatedAt());
+					if(org.getCreatedBy() != null)
+						dto.setCreatedBy(org.getCreatedBy().getId());
+					if(org.getUpdatedBy() != null)
+						dto.setUpdatedBy(org.getUpdatedBy().getId());					
+					orgDtos.add(dto);
+				}
+				response = new ListResponse<OrganizationDto>(ResponseEnum.SUCCESS, orgDtos);
 			} else {
-				response = new ObjectResponse<Organization>(ResponseEnum.ITEM_NOT_FOUND, null);
+				response = new ListResponse<OrganizationDto>(ResponseEnum.SUCCESS, null);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			response = new ObjectResponse<Organization>(ResponseEnum.TRY_AGAIN, null);
+			response = new ListResponse<OrganizationDto>(ResponseEnum.TRY_AGAIN, null);
 		}
 		return response;
 	}
 
 	@Override
-	public ObjectResponse<Organization> activateOrganization(OrganizationDto organizationDto) {
-		ObjectResponse<Organization> response;
-		Organization organization;
+	public ListResponse<OrganizationDto> getAllDeclinedOrganizations() {
+		ListResponse<OrganizationDto> response;
 		try {
-			organization = organizationRepository.getOne(organizationDto.getId());
-			if(organization != null && organization.getStatus() == OrganizationStatus.DECLINED.getValue()) {
-				organization.setStatus(OrganizationStatus.ACTIVE.getValue());
-				organization.setUpdatedAt(new Date());
-				organization.setUpdatedBy(userRepository.getOne(organizationDto.getCreater_id()));
-				response = new ObjectResponse<Organization>(ResponseEnum.SUCCESS, organizationRepository.save(organization));
+			List<Organization> orgs = organizationRepository.getOrganizationsByStatus(OrganizationStatus.DECLINED);
+			if(orgs != null) {
+				List<OrganizationDto> orgDtos = new ArrayList<OrganizationDto>();
+				for(Organization org : orgs) {
+					OrganizationDto dto = new OrganizationDto();
+					dto.setId(org.getId());
+					dto.setName(org.getName());
+					dto.setStatus(org.getStatus());
+					dto.setDescription(org.getDescription());
+					dto.setCreatedAt(org.getCreatedAt());
+					dto.setUpdatedAt(org.getUpdatedAt());
+					if(org.getCreatedBy() != null)
+						dto.setCreatedBy(org.getCreatedBy().getId());
+					if(org.getUpdatedBy() != null)
+						dto.setUpdatedBy(org.getUpdatedBy().getId());					
+					orgDtos.add(dto);
+				}
+				response = new ListResponse<OrganizationDto>(ResponseEnum.SUCCESS, orgDtos);
 			} else {
-				response = new ObjectResponse<Organization>(ResponseEnum.ITEM_NOT_FOUND, null);
+				response = new ListResponse<OrganizationDto>(ResponseEnum.SUCCESS, null);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			response = new ObjectResponse<Organization>(ResponseEnum.TRY_AGAIN, null);
+			response = new ListResponse<OrganizationDto>(ResponseEnum.TRY_AGAIN, null);
 		}
 		return response;
 	}
-
+	
 	@Override
-	public ListResponse<Organization> getAllOrganization() {
-		ListResponse<Organization> response;
+	public ListResponse<OrganizationDto> getAllOrganizations() {
+		ListResponse<OrganizationDto> response;
 		try {
-			response = new ListResponse<Organization>(ResponseEnum.SUCCESS, organizationRepository.findAll());
+			List<Organization> orgs = organizationRepository.findAll();
+			if(orgs != null) {
+				List<OrganizationDto> orgDtos = new ArrayList<OrganizationDto>();
+				for(Organization org : orgs) {
+					OrganizationDto dto = new OrganizationDto();
+					dto.setId(org.getId());
+					dto.setName(org.getName());
+					dto.setStatus(org.getStatus());
+					dto.setDescription(org.getDescription());
+					dto.setCreatedAt(org.getCreatedAt());
+					dto.setUpdatedAt(org.getUpdatedAt());
+					if(org.getCreatedBy() != null)
+						dto.setCreatedBy(org.getCreatedBy().getId());
+					if(org.getUpdatedBy() != null)
+						dto.setUpdatedBy(org.getUpdatedBy().getId());					
+					orgDtos.add(dto);
+				}
+				response = new ListResponse<OrganizationDto>(ResponseEnum.SUCCESS, orgDtos);
+			} else {
+				response = new ListResponse<OrganizationDto>(ResponseEnum.SUCCESS, null);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			response = new ListResponse<Organization>(ResponseEnum.TRY_AGAIN, null);
-		}
-		return response;
-	}
-
-	@Override
-	public ListResponse<Organization> getAllActiveOrganization() {
-		ListResponse<Organization> response;
-		try {
-			response = new ListResponse<Organization>(ResponseEnum.SUCCESS, organizationRepository.getOrganizationByStatus(OrganizationStatus.ACTIVE.getValue()));
-		} catch (Exception e) {
-			e.printStackTrace();
-			response = new ListResponse<Organization>(ResponseEnum.TRY_AGAIN, null);
-		}
-		return response;
-	}
-
-	@Override
-	public ListResponse<Organization> getAllDeclineOrganization() {
-		ListResponse<Organization> response;
-		try {
-			response = new ListResponse<Organization>(ResponseEnum.SUCCESS, organizationRepository.getOrganizationByStatus(OrganizationStatus.DECLINED.getValue()));
-		} catch (Exception e) {
-			e.printStackTrace();
-			response = new ListResponse<Organization>(ResponseEnum.TRY_AGAIN, null);
+			response = new ListResponse<OrganizationDto>(ResponseEnum.TRY_AGAIN, null);
 		}
 		return response;
 	}
