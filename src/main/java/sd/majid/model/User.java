@@ -249,12 +249,5 @@ public class User {
 	public void setOrganization(Organization organization) {
 		this.organization = organization;
 	}
-
-	/*@Override
-	public String toString() {
-		return "User [id=" + id + ", name=" + name + ", phone=" + phone + ", email=" + email + ", userName=" + userName
-				+ ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + ", password=" + password + ", status="
-				+ status + ", type=" + type + ", createdBy=" + createdBy + ", updatedBy=" + updatedBy + "]";
-	}*/
 	
 }
