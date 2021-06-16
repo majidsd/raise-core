@@ -46,7 +46,9 @@ public class RaiseServiceImpl implements IRaiseService {
 				raiseDto.setStatus(savedRaise.getStatus());
 				raiseDto.setCreatedAt(savedRaise.getCreatedAt());
 				raiseDto.setUpdatedAt(savedRaise.getUpdatedAt());
-				raiseDto.setCreatedById(savedRaise.getCreatedBy().getId());
+				if(savedRaise.getCreatedBy() != null) {
+					raiseDto.setCreatedById(savedRaise.getCreatedBy().getId());
+				}
 				response = new ObjectResponse<RaiseDto>(ResponseEnum.SUCCESS, raiseDto);
 			} else {
 				response = new ObjectResponse<RaiseDto>(ResponseEnum.TRY_AGAIN, null);
@@ -82,12 +84,12 @@ public class RaiseServiceImpl implements IRaiseService {
 				}
 				if(savedRaise.getOrganization() != null) {
 					OrganizationDto org = new OrganizationDto();
-					org.setId(savedRaise.getId());
-					org.setName(savedRaise.getName());
-					org.setDescription(savedRaise.getDescription());
+					org.setId(savedRaise.getOrganization().getId());
+					org.setName(savedRaise.getOrganization().getName());
+					org.setDescription(savedRaise.getOrganization().getDescription());
 					org.setStatus(savedRaise.getOrganization().getStatus());
-					org.setCreatedAt(savedRaise.getCreatedAt());
-					org.setUpdatedAt(savedRaise.getUpdatedAt());
+					org.setCreatedAt(savedRaise.getOrganization().getCreatedAt());
+					org.setUpdatedAt(savedRaise.getOrganization().getUpdatedAt());
 					raiseDto.setOrganization(org);
 				}
 				response = new ObjectResponse<RaiseDto>(ResponseEnum.SUCCESS, raiseDto);
@@ -124,12 +126,12 @@ public class RaiseServiceImpl implements IRaiseService {
 				}
 				if(savedRaise.getOrganization() != null) {
 					OrganizationDto org = new OrganizationDto();
-					org.setId(savedRaise.getId());
-					org.setName(savedRaise.getName());
-					org.setDescription(savedRaise.getDescription());
+					org.setId(savedRaise.getOrganization().getId());
+					org.setName(savedRaise.getOrganization().getName());
+					org.setDescription(savedRaise.getOrganization().getDescription());
 					org.setStatus(savedRaise.getOrganization().getStatus());
-					org.setCreatedAt(savedRaise.getCreatedAt());
-					org.setUpdatedAt(savedRaise.getUpdatedAt());
+					org.setCreatedAt(savedRaise.getOrganization().getCreatedAt());
+					org.setUpdatedAt(savedRaise.getOrganization().getUpdatedAt());
 					raiseDto.setOrganization(org);
 				}
 				response = new ObjectResponse<RaiseDto>(ResponseEnum.SUCCESS, raiseDto);
@@ -167,12 +169,12 @@ public class RaiseServiceImpl implements IRaiseService {
 				}
 				if(savedRaise.getOrganization() != null) {
 					OrganizationDto org = new OrganizationDto();
-					org.setId(savedRaise.getId());
-					org.setName(savedRaise.getName());
-					org.setDescription(savedRaise.getDescription());
+					org.setId(savedRaise.getOrganization().getId());
+					org.setName(savedRaise.getOrganization().getName());
+					org.setDescription(savedRaise.getOrganization().getDescription());
 					org.setStatus(savedRaise.getOrganization().getStatus());
-					org.setCreatedAt(savedRaise.getCreatedAt());
-					org.setUpdatedAt(savedRaise.getUpdatedAt());
+					org.setCreatedAt(savedRaise.getOrganization().getCreatedAt());
+					org.setUpdatedAt(savedRaise.getOrganization().getUpdatedAt());
 					raiseDto.setOrganization(org);
 				}
 				response = new ObjectResponse<RaiseDto>(ResponseEnum.SUCCESS, raiseDto);
@@ -210,12 +212,12 @@ public class RaiseServiceImpl implements IRaiseService {
 				}
 				if(savedRaise.getOrganization() != null) {
 					OrganizationDto org = new OrganizationDto();
-					org.setId(savedRaise.getId());
-					org.setName(savedRaise.getName());
-					org.setDescription(savedRaise.getDescription());
+					org.setId(savedRaise.getOrganization().getId());
+					org.setName(savedRaise.getOrganization().getName());
+					org.setDescription(savedRaise.getOrganization().getDescription());
 					org.setStatus(savedRaise.getOrganization().getStatus());
-					org.setCreatedAt(savedRaise.getCreatedAt());
-					org.setUpdatedAt(savedRaise.getUpdatedAt());
+					org.setCreatedAt(savedRaise.getOrganization().getCreatedAt());
+					org.setUpdatedAt(savedRaise.getOrganization().getUpdatedAt());
 					raiseDto.setOrganization(org);
 				}
 				response = new ObjectResponse<RaiseDto>(ResponseEnum.SUCCESS, raiseDto);
@@ -251,12 +253,12 @@ public class RaiseServiceImpl implements IRaiseService {
 				}
 				if(savedRaise.getOrganization() != null) {
 					OrganizationDto org = new OrganizationDto();
-					org.setId(savedRaise.getId());
-					org.setName(savedRaise.getName());
-					org.setDescription(savedRaise.getDescription());
+					org.setId(savedRaise.getOrganization().getId());
+					org.setName(savedRaise.getOrganization().getName());
+					org.setDescription(savedRaise.getOrganization().getDescription());
 					org.setStatus(savedRaise.getOrganization().getStatus());
-					org.setCreatedAt(savedRaise.getCreatedAt());
-					org.setUpdatedAt(savedRaise.getUpdatedAt());
+					org.setCreatedAt(savedRaise.getOrganization().getCreatedAt());
+					org.setUpdatedAt(savedRaise.getOrganization().getUpdatedAt());
 					raiseDto.setOrganization(org);
 				}
 				if(savedRaise.getPickUp() != null) {
@@ -299,6 +301,60 @@ public class RaiseServiceImpl implements IRaiseService {
 	}
 	
 	@Override
+	public ListResponse<RaiseDto> getAssignedRaisesByPickUpUser(User pickUpUser) {
+		ListResponse<RaiseDto> response;
+		try {
+			List<Raise> savedRaises = raiseRepository.getRaisesByPickUpUser(pickUpUser);
+			if(savedRaises != null) {
+				List<RaiseDto> raiseDtos = new ArrayList<RaiseDto>();
+				for(Raise savedRaise : savedRaises) {
+					RaiseDto raiseDto = new RaiseDto();
+					raiseDto.setId(savedRaise.getId());
+					raiseDto.setName(savedRaise.getName());
+					raiseDto.setDescription(savedRaise.getDescription());
+					raiseDto.setLatitude(savedRaise.getLatitude());
+					raiseDto.setLongitude(savedRaise.getLongitude());
+					raiseDto.setPhone(savedRaise.getPhone());
+					raiseDto.setStatus(savedRaise.getStatus());
+					raiseDto.setCreatedAt(savedRaise.getCreatedAt());
+					raiseDto.setUpdatedAt(savedRaise.getUpdatedAt());
+					if(savedRaise.getCreatedBy() != null) {
+						raiseDto.setCreatedById(savedRaise.getCreatedBy().getId());
+					}
+					if(savedRaise.getOrganization() != null) {
+						OrganizationDto org = new OrganizationDto();
+						org.setId(savedRaise.getOrganization().getId());
+						org.setName(savedRaise.getOrganization().getName());
+						org.setDescription(savedRaise.getOrganization().getDescription());
+						org.setStatus(savedRaise.getOrganization().getStatus());
+						org.setCreatedAt(savedRaise.getOrganization().getCreatedAt());
+						org.setUpdatedAt(savedRaise.getOrganization().getUpdatedAt());
+						raiseDto.setOrganization(org);
+					}
+					if(savedRaise.getPickUp() != null) {
+						PickUpUserDto pickUp = new PickUpUserDto();
+						pickUp.setId(savedRaise.getPickUp().getId());
+						pickUp.setName(savedRaise.getPickUp().getName());
+						pickUp.setPhone(savedRaise.getPickUp().getPhone());
+						if(savedRaise.getPickUp().getOrganization() != null) {
+							pickUp.setOrganization(savedRaise.getPickUp().getOrganization().getName());
+						}
+						raiseDto.setPickUpUser(pickUp);
+					}
+					raiseDtos.add(raiseDto);
+				}
+				response = new ListResponse<RaiseDto>(ResponseEnum.SUCCESS, raiseDtos);
+			} else {
+				response = new ListResponse<RaiseDto>(ResponseEnum.SUCCESS, null);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			response = new ListResponse<RaiseDto>(ResponseEnum.TRY_AGAIN, null);
+		}
+		return response;
+	}
+	
+	@Override
 	public ListResponse<RaiseDto> getOrganizationInProgressRaises(Organization organization) {
 		ListResponse<RaiseDto> response;
 		try {
@@ -321,12 +377,12 @@ public class RaiseServiceImpl implements IRaiseService {
 					}
 					if(savedRaise.getOrganization() != null) {
 						OrganizationDto org = new OrganizationDto();
-						org.setId(savedRaise.getId());
-						org.setName(savedRaise.getName());
-						org.setDescription(savedRaise.getDescription());
+						org.setId(savedRaise.getOrganization().getId());
+						org.setName(savedRaise.getOrganization().getName());
+						org.setDescription(savedRaise.getOrganization().getDescription());
 						org.setStatus(savedRaise.getOrganization().getStatus());
-						org.setCreatedAt(savedRaise.getCreatedAt());
-						org.setUpdatedAt(savedRaise.getUpdatedAt());
+						org.setCreatedAt(savedRaise.getOrganization().getCreatedAt());
+						org.setUpdatedAt(savedRaise.getOrganization().getUpdatedAt());
 						raiseDto.setOrganization(org);
 					}
 					if(savedRaise.getPickUp() != null) {
@@ -375,12 +431,12 @@ public class RaiseServiceImpl implements IRaiseService {
 					}
 					if(savedRaise.getOrganization() != null) {
 						OrganizationDto org = new OrganizationDto();
-						org.setId(savedRaise.getId());
-						org.setName(savedRaise.getName());
-						org.setDescription(savedRaise.getDescription());
+						org.setId(savedRaise.getOrganization().getId());
+						org.setName(savedRaise.getOrganization().getName());
+						org.setDescription(savedRaise.getOrganization().getDescription());
 						org.setStatus(savedRaise.getOrganization().getStatus());
-						org.setCreatedAt(savedRaise.getCreatedAt());
-						org.setUpdatedAt(savedRaise.getUpdatedAt());
+						org.setCreatedAt(savedRaise.getOrganization().getCreatedAt());
+						org.setUpdatedAt(savedRaise.getOrganization().getUpdatedAt());
 						raiseDto.setOrganization(org);
 					}
 					if(savedRaise.getPickUp() != null) {
@@ -429,12 +485,12 @@ public class RaiseServiceImpl implements IRaiseService {
 					}
 					if(savedRaise.getOrganization() != null) {
 						OrganizationDto org = new OrganizationDto();
-						org.setId(savedRaise.getId());
-						org.setName(savedRaise.getName());
-						org.setDescription(savedRaise.getDescription());
+						org.setId(savedRaise.getOrganization().getId());
+						org.setName(savedRaise.getOrganization().getName());
+						org.setDescription(savedRaise.getOrganization().getDescription());
 						org.setStatus(savedRaise.getOrganization().getStatus());
-						org.setCreatedAt(savedRaise.getCreatedAt());
-						org.setUpdatedAt(savedRaise.getUpdatedAt());
+						org.setCreatedAt(savedRaise.getOrganization().getCreatedAt());
+						org.setUpdatedAt(savedRaise.getOrganization().getUpdatedAt());
 						raiseDto.setOrganization(org);
 					}
 					if(savedRaise.getPickUp() != null) {
@@ -483,12 +539,12 @@ public class RaiseServiceImpl implements IRaiseService {
 					}
 					if(savedRaise.getOrganization() != null) {
 						OrganizationDto org = new OrganizationDto();
-						org.setId(savedRaise.getId());
-						org.setName(savedRaise.getName());
-						org.setDescription(savedRaise.getDescription());
+						org.setId(savedRaise.getOrganization().getId());
+						org.setName(savedRaise.getOrganization().getName());
+						org.setDescription(savedRaise.getOrganization().getDescription());
 						org.setStatus(savedRaise.getOrganization().getStatus());
-						org.setCreatedAt(savedRaise.getCreatedAt());
-						org.setUpdatedAt(savedRaise.getUpdatedAt());
+						org.setCreatedAt(savedRaise.getOrganization().getCreatedAt());
+						org.setUpdatedAt(savedRaise.getOrganization().getUpdatedAt());
 						raiseDto.setOrganization(org);
 					}
 					if(savedRaise.getPickUp() != null) {
@@ -537,12 +593,12 @@ public class RaiseServiceImpl implements IRaiseService {
 					}
 					if(savedRaise.getOrganization() != null) {
 						OrganizationDto org = new OrganizationDto();
-						org.setId(savedRaise.getId());
-						org.setName(savedRaise.getName());
-						org.setDescription(savedRaise.getDescription());
+						org.setId(savedRaise.getOrganization().getId());
+						org.setName(savedRaise.getOrganization().getName());
+						org.setDescription(savedRaise.getOrganization().getDescription());
 						org.setStatus(savedRaise.getOrganization().getStatus());
-						org.setCreatedAt(savedRaise.getCreatedAt());
-						org.setUpdatedAt(savedRaise.getUpdatedAt());
+						org.setCreatedAt(savedRaise.getOrganization().getCreatedAt());
+						org.setUpdatedAt(savedRaise.getOrganization().getUpdatedAt());
 						raiseDto.setOrganization(org);
 					}
 					if(savedRaise.getPickUp() != null) {
@@ -592,12 +648,12 @@ public class RaiseServiceImpl implements IRaiseService {
 					}
 					if(savedRaise.getOrganization() != null) {
 						OrganizationDto org = new OrganizationDto();
-						org.setId(savedRaise.getId());
-						org.setName(savedRaise.getName());
-						org.setDescription(savedRaise.getDescription());
+						org.setId(savedRaise.getOrganization().getId());
+						org.setName(savedRaise.getOrganization().getName());
+						org.setDescription(savedRaise.getOrganization().getDescription());
 						org.setStatus(savedRaise.getOrganization().getStatus());
-						org.setCreatedAt(savedRaise.getCreatedAt());
-						org.setUpdatedAt(savedRaise.getUpdatedAt());
+						org.setCreatedAt(savedRaise.getOrganization().getCreatedAt());
+						org.setUpdatedAt(savedRaise.getOrganization().getUpdatedAt());
 						raiseDto.setOrganization(org);
 					}
 					if(savedRaise.getPickUp() != null) {
@@ -646,12 +702,12 @@ public class RaiseServiceImpl implements IRaiseService {
 					}
 					if(savedRaise.getOrganization() != null) {
 						OrganizationDto org = new OrganizationDto();
-						org.setId(savedRaise.getId());
-						org.setName(savedRaise.getName());
-						org.setDescription(savedRaise.getDescription());
+						org.setId(savedRaise.getOrganization().getId());
+						org.setName(savedRaise.getOrganization().getName());
+						org.setDescription(savedRaise.getOrganization().getDescription());
 						org.setStatus(savedRaise.getOrganization().getStatus());
-						org.setCreatedAt(savedRaise.getCreatedAt());
-						org.setUpdatedAt(savedRaise.getUpdatedAt());
+						org.setCreatedAt(savedRaise.getOrganization().getCreatedAt());
+						org.setUpdatedAt(savedRaise.getOrganization().getUpdatedAt());
 						raiseDto.setOrganization(org);
 					}
 					if(savedRaise.getPickUp() != null) {
@@ -700,12 +756,12 @@ public class RaiseServiceImpl implements IRaiseService {
 					}
 					if(savedRaise.getOrganization() != null) {
 						OrganizationDto org = new OrganizationDto();
-						org.setId(savedRaise.getId());
-						org.setName(savedRaise.getName());
-						org.setDescription(savedRaise.getDescription());
+						org.setId(savedRaise.getOrganization().getId());
+						org.setName(savedRaise.getOrganization().getName());
+						org.setDescription(savedRaise.getOrganization().getDescription());
 						org.setStatus(savedRaise.getOrganization().getStatus());
-						org.setCreatedAt(savedRaise.getCreatedAt());
-						org.setUpdatedAt(savedRaise.getUpdatedAt());
+						org.setCreatedAt(savedRaise.getOrganization().getCreatedAt());
+						org.setUpdatedAt(savedRaise.getOrganization().getUpdatedAt());
 						raiseDto.setOrganization(org);
 					}
 					if(savedRaise.getPickUp() != null) {
@@ -754,12 +810,12 @@ public class RaiseServiceImpl implements IRaiseService {
 					}
 					if(savedRaise.getOrganization() != null) {
 						OrganizationDto org = new OrganizationDto();
-						org.setId(savedRaise.getId());
-						org.setName(savedRaise.getName());
-						org.setDescription(savedRaise.getDescription());
+						org.setId(savedRaise.getOrganization().getId());
+						org.setName(savedRaise.getOrganization().getName());
+						org.setDescription(savedRaise.getOrganization().getDescription());
 						org.setStatus(savedRaise.getOrganization().getStatus());
-						org.setCreatedAt(savedRaise.getCreatedAt());
-						org.setUpdatedAt(savedRaise.getUpdatedAt());
+						org.setCreatedAt(savedRaise.getOrganization().getCreatedAt());
+						org.setUpdatedAt(savedRaise.getOrganization().getUpdatedAt());
 						raiseDto.setOrganization(org);
 					}
 					if(savedRaise.getPickUp() != null) {
@@ -808,12 +864,12 @@ public class RaiseServiceImpl implements IRaiseService {
 					}
 					if(savedRaise.getOrganization() != null) {
 						OrganizationDto org = new OrganizationDto();
-						org.setId(savedRaise.getId());
-						org.setName(savedRaise.getName());
-						org.setDescription(savedRaise.getDescription());
+						org.setId(savedRaise.getOrganization().getId());
+						org.setName(savedRaise.getOrganization().getName());
+						org.setDescription(savedRaise.getOrganization().getDescription());
 						org.setStatus(savedRaise.getOrganization().getStatus());
-						org.setCreatedAt(savedRaise.getCreatedAt());
-						org.setUpdatedAt(savedRaise.getUpdatedAt());
+						org.setCreatedAt(savedRaise.getOrganization().getCreatedAt());
+						org.setUpdatedAt(savedRaise.getOrganization().getUpdatedAt());
 						raiseDto.setOrganization(org);
 					}
 					if(savedRaise.getPickUp() != null) {
@@ -862,12 +918,12 @@ public class RaiseServiceImpl implements IRaiseService {
 					}
 					if(savedRaise.getOrganization() != null) {
 						OrganizationDto org = new OrganizationDto();
-						org.setId(savedRaise.getId());
-						org.setName(savedRaise.getName());
-						org.setDescription(savedRaise.getDescription());
+						org.setId(savedRaise.getOrganization().getId());
+						org.setName(savedRaise.getOrganization().getName());
+						org.setDescription(savedRaise.getOrganization().getDescription());
 						org.setStatus(savedRaise.getOrganization().getStatus());
-						org.setCreatedAt(savedRaise.getCreatedAt());
-						org.setUpdatedAt(savedRaise.getUpdatedAt());
+						org.setCreatedAt(savedRaise.getOrganization().getCreatedAt());
+						org.setUpdatedAt(savedRaise.getOrganization().getUpdatedAt());
 						raiseDto.setOrganization(org);
 					}
 					if(savedRaise.getPickUp() != null) {
@@ -917,12 +973,12 @@ public class RaiseServiceImpl implements IRaiseService {
 					}
 					if(savedRaise.getOrganization() != null) {
 						OrganizationDto org = new OrganizationDto();
-						org.setId(savedRaise.getId());
-						org.setName(savedRaise.getName());
-						org.setDescription(savedRaise.getDescription());
+						org.setId(savedRaise.getOrganization().getId());
+						org.setName(savedRaise.getOrganization().getName());
+						org.setDescription(savedRaise.getOrganization().getDescription());
 						org.setStatus(savedRaise.getOrganization().getStatus());
-						org.setCreatedAt(savedRaise.getCreatedAt());
-						org.setUpdatedAt(savedRaise.getUpdatedAt());
+						org.setCreatedAt(savedRaise.getOrganization().getCreatedAt());
+						org.setUpdatedAt(savedRaise.getOrganization().getUpdatedAt());
 						raiseDto.setOrganization(org);
 					}
 					if(savedRaise.getPickUp() != null) {
@@ -971,12 +1027,12 @@ public class RaiseServiceImpl implements IRaiseService {
 					}
 					if(savedRaise.getOrganization() != null) {
 						OrganizationDto org = new OrganizationDto();
-						org.setId(savedRaise.getId());
-						org.setName(savedRaise.getName());
-						org.setDescription(savedRaise.getDescription());
+						org.setId(savedRaise.getOrganization().getId());
+						org.setName(savedRaise.getOrganization().getName());
+						org.setDescription(savedRaise.getOrganization().getDescription());
 						org.setStatus(savedRaise.getOrganization().getStatus());
-						org.setCreatedAt(savedRaise.getCreatedAt());
-						org.setUpdatedAt(savedRaise.getUpdatedAt());
+						org.setCreatedAt(savedRaise.getOrganization().getCreatedAt());
+						org.setUpdatedAt(savedRaise.getOrganization().getUpdatedAt());
 						raiseDto.setOrganization(org);
 					}
 					if(savedRaise.getPickUp() != null) {
@@ -1025,12 +1081,12 @@ public class RaiseServiceImpl implements IRaiseService {
 					}
 					if(savedRaise.getOrganization() != null) {
 						OrganizationDto org = new OrganizationDto();
-						org.setId(savedRaise.getId());
-						org.setName(savedRaise.getName());
-						org.setDescription(savedRaise.getDescription());
+						org.setId(savedRaise.getOrganization().getId());
+						org.setName(savedRaise.getOrganization().getName());
+						org.setDescription(savedRaise.getOrganization().getDescription());
 						org.setStatus(savedRaise.getOrganization().getStatus());
-						org.setCreatedAt(savedRaise.getCreatedAt());
-						org.setUpdatedAt(savedRaise.getUpdatedAt());
+						org.setCreatedAt(savedRaise.getOrganization().getCreatedAt());
+						org.setUpdatedAt(savedRaise.getOrganization().getUpdatedAt());
 						raiseDto.setOrganization(org);
 					}
 					if(savedRaise.getPickUp() != null) {
@@ -1079,12 +1135,12 @@ public class RaiseServiceImpl implements IRaiseService {
 					}
 					if(savedRaise.getOrganization() != null) {
 						OrganizationDto org = new OrganizationDto();
-						org.setId(savedRaise.getId());
-						org.setName(savedRaise.getName());
-						org.setDescription(savedRaise.getDescription());
+						org.setId(savedRaise.getOrganization().getId());
+						org.setName(savedRaise.getOrganization().getName());
+						org.setDescription(savedRaise.getOrganization().getDescription());
 						org.setStatus(savedRaise.getOrganization().getStatus());
-						org.setCreatedAt(savedRaise.getCreatedAt());
-						org.setUpdatedAt(savedRaise.getUpdatedAt());
+						org.setCreatedAt(savedRaise.getOrganization().getCreatedAt());
+						org.setUpdatedAt(savedRaise.getOrganization().getUpdatedAt());
 						raiseDto.setOrganization(org);
 					}
 					if(savedRaise.getPickUp() != null) {
@@ -1133,12 +1189,12 @@ public class RaiseServiceImpl implements IRaiseService {
 					}
 					if(savedRaise.getOrganization() != null) {
 						OrganizationDto org = new OrganizationDto();
-						org.setId(savedRaise.getId());
-						org.setName(savedRaise.getName());
-						org.setDescription(savedRaise.getDescription());
+						org.setId(savedRaise.getOrganization().getId());
+						org.setName(savedRaise.getOrganization().getName());
+						org.setDescription(savedRaise.getOrganization().getDescription());
 						org.setStatus(savedRaise.getOrganization().getStatus());
-						org.setCreatedAt(savedRaise.getCreatedAt());
-						org.setUpdatedAt(savedRaise.getUpdatedAt());
+						org.setCreatedAt(savedRaise.getOrganization().getCreatedAt());
+						org.setUpdatedAt(savedRaise.getOrganization().getUpdatedAt());
 						raiseDto.setOrganization(org);
 					}
 					if(savedRaise.getPickUp() != null) {
@@ -1188,12 +1244,12 @@ public class RaiseServiceImpl implements IRaiseService {
 					}
 					if(savedRaise.getOrganization() != null) {
 						OrganizationDto org = new OrganizationDto();
-						org.setId(savedRaise.getId());
-						org.setName(savedRaise.getName());
-						org.setDescription(savedRaise.getDescription());
+						org.setId(savedRaise.getOrganization().getId());
+						org.setName(savedRaise.getOrganization().getName());
+						org.setDescription(savedRaise.getOrganization().getDescription());
 						org.setStatus(savedRaise.getOrganization().getStatus());
-						org.setCreatedAt(savedRaise.getCreatedAt());
-						org.setUpdatedAt(savedRaise.getUpdatedAt());
+						org.setCreatedAt(savedRaise.getOrganization().getCreatedAt());
+						org.setUpdatedAt(savedRaise.getOrganization().getUpdatedAt());
 						raiseDto.setOrganization(org);
 					}
 					if(savedRaise.getPickUp() != null) {

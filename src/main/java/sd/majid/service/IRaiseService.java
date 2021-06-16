@@ -25,6 +25,8 @@ public interface IRaiseService {
 	public ObjectResponse<RaiseDto> getRaiseById(Long id);
 	public ObjectResponse<Raise> getRaiseObjectById(Long id);
 	
+	public ListResponse<RaiseDto> getAssignedRaisesByPickUpUser(User pickUpUser);
+	
 	public ListResponse<RaiseDto> getOrganizationInProgressRaises(Organization organization);
 	public ListResponse<RaiseDto> getOrganizationDoneRaises(Organization organization);
 	public ListResponse<RaiseDto> getOrganizationCanceledRaises(Organization organization);
