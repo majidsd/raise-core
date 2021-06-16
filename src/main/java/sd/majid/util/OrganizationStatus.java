@@ -10,7 +10,8 @@ package sd.majid.util;
 public enum OrganizationStatus {
 	NEW("New", (byte) 0),
 	ACTIVE("Active", (byte) 1),
-	DECLINED("Declined", (byte) 2);
+	DECLINED("Declined", (byte) 2),
+	DELETED("Deleted", (byte) 3);
 	
 	private String name;
 	private Byte value;
