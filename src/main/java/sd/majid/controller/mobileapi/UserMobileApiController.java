@@ -1,11 +1,9 @@
 /**
  * 
  */
-package sd.majid.controller.api;
+package sd.majid.controller.mobileapi;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -15,61 +13,48 @@ import org.springframework.web.bind.annotation.RestController;
 
 import sd.majid.dto.UserDto;
 import sd.majid.model.User;
+import sd.majid.request.CreateUserRequest;
 import sd.majid.response.BaseResponse;
-import sd.majid.response.ListResponse;
 import sd.majid.response.ObjectResponse;
 import sd.majid.service.IUserService;
+import sd.majid.util.UserType;
 
 /**
  * @author MaJiD
  *
  */
 @RestController
-@RequestMapping("/api/user")
-public class UserApiController {
+@RequestMapping("/api/mobile/user")
+public class UserMobileApiController {
 	
 	@Autowired
 	private IUserService userService;
 	
-	@GetMapping("/all")
-	public ListResponse<UserDto> getAllUsers(){
-		ListResponse<UserDto> usersDtos = userService.getAllUsers();
-		return usersDtos;
-	}
-	
-	@GetMapping("/get/{userId}")
-	public ObjectResponse<UserDto> getUser(@PathVariable("userId") Long userId){
-		ObjectResponse<UserDto> response = userService.getUserById(userId);
-		return response;
-	}
-	
-	@PostMapping("/save")
-	public ObjectResponse<UserDto> saveUser(@RequestBody User user){
+	@PostMapping("/createUser")
+	public ObjectResponse<UserDto> saveUser(@RequestBody CreateUserRequest createUserRequest){
+		User user = new User();
+		user.setName(createUserRequest.getName());
+		user.setPhone(createUserRequest.getPhone());
+		user.setEmail(createUserRequest.getEmail());
+		user.setUserName(createUserRequest.getUserName());
+		user.setPassword(createUserRequest.getPassword());
+		user.setType(UserType.valueOf(createUserRequest.getType()));
 		ObjectResponse<UserDto> response = userService.addUser(user);
 		return response;
 	}
 	
-	@PutMapping("/update")
-	public ObjectResponse<UserDto> updateUser(@RequestBody User user){
-		ObjectResponse<UserDto> response = userService.updateUser(user);
-		return response;
-	}
-	
-	@PutMapping("/revoke")
-	public BaseResponse revokeUser(@RequestBody User user){
-		BaseResponse response = userService.revokeUser(user);
-		return response;
-	}
-	
 	@PutMapping("/activate")
-	public ObjectResponse<UserDto> activateUser(@RequestBody User user){
-		ObjectResponse<UserDto> response = userService.activateUser(user);
+	public BaseResponse activateUser(@PathVariable("token") String token){
+		User user = userService.getUserObjectById(1L).getDto();
+		BaseResponse response = userService.activateUser(user);
 		return response;
 	}
 	
-	@DeleteMapping("/delete")
-	public BaseResponse deleteUser(@RequestBody User user) {
-		BaseResponse response = userService.deleteUser(user);
+	
+	@PutMapping("/update")
+	public ObjectResponse<UserDto> updateUser(@RequestBody CreateUserRequest createUserRequest){
+		User user = new User();
+		ObjectResponse<UserDto> response = userService.updateUserData(user);
 		return response;
 	}
 }

@@ -1,4 +1,4 @@
-package sd.majid.controller.web;
+package sd.majid.controller.webapi;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
