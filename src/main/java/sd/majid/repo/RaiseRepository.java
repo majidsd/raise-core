@@ -43,4 +43,7 @@ public interface RaiseRepository extends JpaRepository<Raise, Long> {
 	@Query("From Raise where status != ?1")
 	public List<Raise> getRaiseByNotStatus(RaiseStatus status);
 	
+	@Query("From Raise where pickUp = ?1")
+	public List<Raise> getRaisesByPickUpUser(User pickUp);
+	
 }
