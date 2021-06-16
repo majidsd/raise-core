@@ -14,9 +14,10 @@ import sd.majid.response.ObjectResponse;
  */
 public interface IOrganizationService {
 	
-	public ObjectResponse<OrganizationDto> addOrganization(Organization organizationDto);
-	public ObjectResponse<OrganizationDto> activateOrganization(Organization organizationDto);
-	public ObjectResponse<OrganizationDto> declineOrganization(Organization organizationDto);
+	public ObjectResponse<OrganizationDto> addOrganization(Organization organization);
+	public ObjectResponse<OrganizationDto> activateOrganization(Organization organization);
+	public ObjectResponse<OrganizationDto> declineOrganization(Organization organization);
+	public ObjectResponse<OrganizationDto> deleteOrganization(Organization organization);
 	
 	public ObjectResponse<OrganizationDto> getOrganizationById(Long id);
 	public ObjectResponse<Organization> getOrganizationObjectById(Long id);

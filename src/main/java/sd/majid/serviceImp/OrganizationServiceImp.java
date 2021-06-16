@@ -119,6 +119,36 @@ public class OrganizationServiceImp implements IOrganizationService {
 		}
 		return response;
 	}
+	
+	@Override
+	public ObjectResponse<OrganizationDto> deleteOrganization(Organization organization) {
+		ObjectResponse<OrganizationDto> response;
+		try {
+			organization.setStatus(OrganizationStatus.DELETED);
+			organization.setUpdatedAt(new Date());
+			Organization org = organizationRepository.save(organization); // deletedOrg
+			if(org != null) {
+				OrganizationDto dto = new OrganizationDto();
+				dto.setId(org.getId());
+				dto.setName(org.getName());
+				dto.setStatus(org.getStatus());
+				dto.setDescription(org.getDescription());
+				dto.setCreatedAt(org.getCreatedAt());
+				dto.setUpdatedAt(org.getUpdatedAt());
+				if(org.getCreatedBy() != null)
+					dto.setCreatedBy(org.getCreatedBy().getId());
+				if(org.getUpdatedBy() != null)
+					dto.setUpdatedBy(org.getUpdatedBy().getId());
+				response = new ObjectResponse<OrganizationDto>(ResponseEnum.SUCCESS, dto);
+			} else {
+				response = new ObjectResponse<OrganizationDto>(ResponseEnum.ITEM_NOT_FOUND, null);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			response = new ObjectResponse<OrganizationDto>(ResponseEnum.TRY_AGAIN, null);
+		}
+		return response;
+	}
 
 	@Override
 	public ObjectResponse<OrganizationDto> getOrganizationById(Long id) {
