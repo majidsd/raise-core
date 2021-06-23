@@ -58,4 +58,18 @@ public class ApplicationRepositoryUnitTests {
 		// Assert
 		System.out.println(application.getAppId() + " - " + application.getHashkey());
 	}
+	
+	@Test
+	public void testUpdateApplicationByAppId() {
+		// Assess
+		String appId = "abcd";
+		
+		// Act
+		Application application = applicationRepository.getApplicationByAppId(appId);
+		application.setStatus(ApplicationStatus.ACTIVE);
+		application = applicationRepository.save(application);
+		
+		// Assert
+		System.out.println(application.getAppId().toUpperCase() + " - " + application.getHashkey().toUpperCase() + " - "+ application.getStatus().getValue());
+	}
 }
