@@ -50,6 +50,18 @@ public class ApplicationServiceUnitTests {
 	}
 	
 	@Test
+	public void testActiveApplication() {
+		// Assess
+		Application application = applicationService.getApplicationById(3).getDto();
+		
+		// Act
+		ObjectResponse<Application> savedApplication = applicationService.declineApplication(application);
+		
+		// Assert
+		System.out.println(savedApplication.getDto().getAppId() + " - " + savedApplication.getDto().getHashkey());
+	}
+	
+	@Test
 	public void testGetApplicationById() {
 		// Act
 		Application application = applicationService.getApplicationById(1).getDto();
